@@ -41,8 +41,8 @@ namespace 元旦惊喜
         internal void ShowSomething()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("这是为了庆祝元旦而搞的发红包工具");
-            sb.Append("目前不支持qq邮箱");
+            sb.AppendLine("这是为了庆祝元旦而搞的发红包工具\n");
+            sb.AppendLine("目前不支持qq邮箱");
             string str = sb.ToString();
             LogInfo(str);
             MessageBox.Show(str);
