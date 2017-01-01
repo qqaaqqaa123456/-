@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Threading;
 namespace 元旦惊喜
 {
     public partial class Form1 : Form,IDisposable
@@ -15,8 +15,10 @@ namespace 元旦惊喜
         public Form1()
         {
             InitializeComponent();
+            this.ControlBox = false;  
             test.c2.ShowSomething();
         }
+
         private  void button1_Click(object sender, EventArgs e)
         {
             try
@@ -46,18 +48,28 @@ namespace 元旦惊喜
             AboutBox1 about = new AboutBox1();
             about.ShowDialog();
         }
-        public void StopAndClean()
+        public  void StopAndClean()
         {
-            GC.Collect(GC.GetGeneration(this),GCCollectionMode.Forced,true);
-        }
-        ~Form1()
-        {
+            Thread.CurrentThread.Abort();
             Process.GetCurrentProcess().Kill();
-            Dispose(true);
+            if (Debugger.IsAttached)
+            Dispose();
         }
         public new void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+            return;
+        }
+        delegate void TEST(object a, object b, object c, object d);
+        private  void testtest(object a,object b,object c,object d)
+        {
+            Close();
             StopAndClean();
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            testtest(1, 2, 3, 4);
         }
     }
 }

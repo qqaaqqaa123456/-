@@ -118,6 +118,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="README.md" />
+    <None Include="元旦惊喜.psess" />
+    <None Include="元旦惊喜1.psess" />
+    <None Include="元旦惊喜170102%281%29.vsp" />
+    <None Include="元旦惊喜170102%282%29.vsp" />
+    <None Include="元旦惊喜170102.vsp" />
+    <None Include="元旦惊喜170102.vspx" />
+    <None Include="元旦惊喜2.psess" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -135,6 +142,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
     <Content Include="Icon1.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

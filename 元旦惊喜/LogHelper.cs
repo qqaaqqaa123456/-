@@ -100,7 +100,6 @@ public  class LogHelper
             var myFs = new FileStream(fileName, FileMode.Open);
             strRe = myFs.Length / 1024;
             myFs.Close();
-            myFs.Dispose();
             Monitor.Exit(FileLock);
         }
         return strRe;
