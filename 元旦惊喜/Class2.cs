@@ -21,11 +21,11 @@ namespace 元旦惊喜
                     string msg = MsgQueue1.Dequeue();
                     Monitor.Exit(MsgQueue1);
                     Monitor.Enter(FileLock1);
-                    if (!Directory.Exists(test.FilePath3))
+                    if (!Directory.Exists(test.FilePath2))
                     {
-                        Directory.CreateDirectory(test.FilePath3);
+                        Directory.CreateDirectory(test.FilePath2);
                     }
-                    string fileName = test.FilePath3 + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
+                    string fileName = test.FilePath3;
                     var logStreamWriter = new StreamWriter(fileName, true);
                     logStreamWriter.WriteLine(msg);
                     logStreamWriter.Flush();
