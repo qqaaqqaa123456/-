@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
-using System.Windows.Controls;
+using System.Diagnostics;
 namespace 元旦惊喜
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form,IDisposable
     {
         public Form1()
         {
@@ -47,9 +46,18 @@ namespace 元旦惊喜
             AboutBox1 about = new AboutBox1();
             about.ShowDialog();
         }
+        public void StopAndClean()
+        {
+            GC.Collect(GC.GetGeneration(this),GCCollectionMode.Forced,true);
+        }
         ~Form1()
         {
-            GC.SuppressFinalize(this);
+            Process.GetCurrentProcess().Kill();
+            Dispose(true);
+        }
+        public new void Dispose()
+        {
+            StopAndClean();
         }
     }
 }
