@@ -34,7 +34,7 @@ namespace 元旦惊喜
             MailMessage _mailMessage = new MailMessage(strfrom, strto);
             _mailMessage.Subject = subj;//主题  
             _mailMessage.Body = bodys;//内容  
-            _mailMessage.BodyEncoding = System.Text.Encoding.Default;//正文编码  
+            _mailMessage.BodyEncoding = Encoding.Default;//正文编码  
             _mailMessage.IsBodyHtml = true;//设置为HTML格式  
             _mailMessage.Priority = MailPriority.High;//优先级  
             try
@@ -42,11 +42,11 @@ namespace 元旦惊喜
                 _smtpClient.Send(_mailMessage);
                 return true;
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
         #endregion
     }
-}
+}                   

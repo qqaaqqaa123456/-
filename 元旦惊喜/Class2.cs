@@ -1,35 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Data;
-using System.Data.SqlClient;
+using System.Windows;
+
 namespace 元旦惊喜
 {
-    class Class2 {
-        public void Test(string text)
+    public class Class2:LogHelper 
+    {
+        internal override void WriteMsg()
         {
-            //先打开两个类库文件
-            SqlConnection con = new SqlConnection();
-            // con.ConnectionString = "server=505-03;database=ttt;user=sa;pwd=123";
-            con.ConnectionString = @"Data Source=DESKTOP-JIB1A9B\SQLEXPRESS;Initial Catalog=test;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            con.Open();
-            /*
-            SqlDataAdapter 对象。 用于填充DataSet （数据集）。
-            SqlDataReader 对象。 从数据库中读取流..
-            后面要做增删改查还需要用到 DataSet 对象。
-            */
-            SqlCommand com = new SqlCommand();
-            com.Connection = con;
-            com.CommandType = CommandType.Text;
-            com.CommandText = string.Format(@"CREATE TABLE [dbo].[Table]
-(
-    [test] TEXT NULL DEFAULT '{0}'
-)",text);
-            SqlDataReader dr = com.ExecuteReader();//执行SQL语句
-            dr.Close();//关闭执行
-            con.Close();//关闭数据库   
+            while (true)
+            {
+                if (MsgQueue1.Count > 0)
+                {
+                    Monitor.Enter(MsgQueue1);
+                    string msg = MsgQueue1.Dequeue();
+                    Monitor.Exit(MsgQueue1);
+                    Monitor.Enter(FileLock1);
+                    if (!Directory.Exists(test.FilePath3))
+                    {
+                        Directory.CreateDirectory(test.FilePath3);
+                    }
+                    string fileName = test.FilePath3 + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
+                    var logStreamWriter = new StreamWriter(fileName, true);
+                    logStreamWriter.WriteLine(msg);
+                    logStreamWriter.Flush();
+                    logStreamWriter.Close();
+                    Monitor.Exit(FileLock1);
+                    if (GetFileSize(fileName) > 1024 * 5)
+                    {
+                        CopyToBak(fileName);
+                    }
+                }
+            }
         }
- }
+        internal void ShowSomething()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("这是为了庆祝元旦而搞的发红包工具");
+            sb.Append("目前不支持qq邮箱");
+            string str = sb.ToString();
+            LogInfo(str);
+            MessageBox.Show(str);
+        }
+    }
 }
