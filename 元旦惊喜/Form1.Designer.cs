@@ -178,6 +178,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(561, 244);
+            this.Icon = Resource1.Icon1;
+            this.Text = "元旦惊喜";
             this.Controls.Add(this.button2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label6);
@@ -197,7 +199,7 @@
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
-
+            
         }
 
         #endregion
