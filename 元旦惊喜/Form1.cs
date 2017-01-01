@@ -47,5 +47,9 @@ namespace 元旦惊喜
             AboutBox1 about = new AboutBox1();
             about.ShowDialog();
         }
+        ~Form1()
+        {
+            GC.SuppressFinalize(this);
+        }
     }
 }
