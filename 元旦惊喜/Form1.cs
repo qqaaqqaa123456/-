@@ -67,9 +67,15 @@ namespace 元旦惊喜
             Close();
             StopAndClean();
         }
+        private IAsyncResult result = null;
         private void button3_Click(object sender, EventArgs e)
         {
-            testtest(1, 2, 3, 4);
+            result = button3.BeginInvoke(new TEST(testtest), 1, 2, 3, 4);
+            if (result.IsCompleted)
+            {
+                button3.EndInvoke(result);
+            }
+            
         }
     }
 }
